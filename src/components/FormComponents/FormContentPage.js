@@ -6,6 +6,7 @@ import Pic4 from './assets/profile-images/pic4.png'
 import React, { useState, useEffect } from "react";
 
 
+
 const FormContentPage = () => {
   let initialValue = {
     name: "",
@@ -77,7 +78,6 @@ const FormContentPage = () => {
       isUpdate: formValue.isUpdate,
     });
   };
-
 
     return (
 
@@ -209,10 +209,11 @@ const FormContentPage = () => {
               <textarea className="input" id="notes" name="notes" onChange={changeValue} value={formValue.notes} placeholder="" style={{ height: "120%" }}></textarea>
             </div>
 
-            <div className="buttonParent">
-              <a href="/form.html" className="resetButton button cancelButton">Cancel</a>
+            <div className="buttonParent"> 
+            <a href=" " className="resetButton button cancelButton">Cancel</a>
+            
               <div className="submit-reset">
-                <button type="submit" className="button submitButton" id="submitButton">{formValue.isUpdate ? "Update" : "Submit"}</button>
+                <button type="submit" className="button submitButton" id="submitButton" >{formValue.isUpdate ? "Update" : "Submit" }</button>
                 <button type="reset" className="resetButton button" onClick={reset}>Reset</button>
               </div>
             </div>

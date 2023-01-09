@@ -1,7 +1,6 @@
 import logo from './assets/images/logo.png'
 import './FormComponenet.css';
 
-
 function HeaderPage() {
     return (
         <div>
@@ -13,6 +12,9 @@ function HeaderPage() {
                     <br/>
                     <span class="emp-text emp-payroll">PAYROLL</span>
                 </div>
+                {/* <h1>
+                  <Link to={HomePag}>HomePage </Link>
+                </h1> */}
                 </div>
             </header>
         </div>

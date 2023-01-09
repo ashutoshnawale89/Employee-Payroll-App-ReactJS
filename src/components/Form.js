@@ -3,7 +3,6 @@ import FormContentPage from './FormComponents/FormContentPage';
 import HeaderPage from './FormComponents/Header';
 import './FormComponents/FormComponenet.css'
 
-
 function Form () {
 
     return (
