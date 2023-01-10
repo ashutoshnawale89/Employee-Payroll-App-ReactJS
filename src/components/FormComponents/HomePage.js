@@ -1,8 +1,10 @@
  import React from 'react';
 import "./HomePage.css"
 import logo from "./logoimages/logo.png";
-
-
+import CreateLogo from './assets/icons/create-black-18dp.svg';
+import DeleteLogo from './assets/icons/delete-black-18dp.svg';
+import { Link } from "react-router-dom"
+ 
 class HomePage extends React.Component {
     
 
@@ -29,11 +31,11 @@ class HomePage extends React.Component {
                     <div className="header-content"> 
                         <div className="emp-detail-text">
                            Employee Details 
-                        </div> 
-                        <a href="./HomePage.js" className="add-button" onClick={this.onClicks}>
-                           <img src="/assets/icons/add-24px.svg" alt=""/>
+                        </div>
+                        <Link className="add-button" to="/form" >
+                            <img src="/assets/icons/add-24px.svg" alt=""/>
                             Add User
-                        </a>
+                        </Link> 
                     </div>
                 <table id="display" className="table">
                     <tr>
@@ -56,8 +58,8 @@ class HomePage extends React.Component {
                         <td>3000000</td>
                         <td>1 Nov 2020</td>
                         <td> 
-                           <img id="1" onclick="remove(this)" alt="delete" src="../assets/icons/download.png"/>
-                           <img id="1" alt="edit" onclick="update(this)" src="./assets/icons/create-black-18dp.svg"/> 
+                           <img id="1" onclick="remove(this)" alt="delete" src={DeleteLogo}/>
+                           <img id="1" alt="edit" onclick="update(this)" src={CreateLogo}/> 
                         </td> 
                     </tr>  
                 </table>
@@ -68,11 +70,4 @@ class HomePage extends React.Component {
 }
     export default HomePage
 
-    /* <h1>
-        <Link to="/home" >Home </Link>  |
-        <Link to="/bridgelabz">Bridgelabz </Link>
-      </h1>
-      <Routes>
-          <Route path='/home' element={<HomePage/>}/>
-          <Route path='/about' element={<Form/>}/>
-      </Routes>*/
+   

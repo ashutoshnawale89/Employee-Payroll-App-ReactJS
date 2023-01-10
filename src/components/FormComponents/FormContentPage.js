@@ -4,7 +4,8 @@ import Pic2 from './assets/profile-images/pic2.png'
 import Pic3 from './assets/profile-images/pic3.png'
 import Pic4 from './assets/profile-images/pic4.png'
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom"
+import EmployeeService from "../services/EmployeeService";
 
 
 const FormContentPage = () => {
@@ -63,12 +64,23 @@ const FormContentPage = () => {
       departments: formValue.departmentValue,
       gender: formValue.gender,
       salary: formValue.salary,
-      startDate: `${formValue.day} ${formValue.month} ${formValue.year}`,
+      startDate: `${formValue.year} ${formValue.month} ${formValue.day} `,
       note: formValue.notes,
       profilePic: formValue.profilePic,
     };
 
     console.log(object);
+
+    EmployeeService.addEmployee(object)
+      .then((respone) => {
+        alert("Employee Data Added Successfully");
+        console.log(respone.data.data);
+      })
+      .catch((error) => {
+        alert("Something went wrong", error);
+      });
+    // clear Data In The Form after submit andd save.....
+    reset();
   };
 
   const reset = () => {
@@ -138,7 +150,7 @@ const FormContentPage = () => {
               <label className="label text" htmlFor="salary">Choose your salary: </label>
               <input className="input" type="range" name="salary" id="salary" 
                       max="5000000" value={formValue.salary} onChange={changeValue}/>
-              <output class="salary-output text" htmlFor="salary"></output>
+              <output class="salary-output text" htmlFor="salary" value={formValue.salary} onChange={changeValue}></output>
             </div>
             
             <div className="row-content">
@@ -146,15 +158,15 @@ const FormContentPage = () => {
               <div>
                 <select id="day" name="day" value={formValue.day} onChange={changeValue}>
                   <option value="" disabled selected>Day</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
+                  <option value="01">1</option>
+                  <option value="02">2</option>
+                  <option value="03">3</option>
+                  <option value="04">4</option>
+                  <option value="05">5</option>
+                  <option value="06">6</option>
+                  <option value="07">7</option>
+                  <option value="08">8</option>
+                  <option value="09">9</option>
                   <option value="10">10</option>
                   <option value="11">11</option>
                   <option value="12">12</option>
@@ -180,15 +192,15 @@ const FormContentPage = () => {
                 </select>
                 <select id="month" name="month" value={formValue.month} onChange={changeValue}>
                   <option value="" disabled selected>Month</option>
-                  <option value="1">January</option>
-                  <option value="2">February</option>
-                  <option value="3">March</option>
-                  <option value="4">April</option>
-                  <option value="5">May</option>
-                  <option value="6">June</option>
-                  <option value="7">July</option>
-                  <option value="8">August</option>
-                  <option value="9">September</option>
+                  <option value="01">January</option>
+                  <option value="02">February</option>
+                  <option value="03">March</option>
+                  <option value="04">April</option>
+                  <option value="05">May</option>
+                  <option value="06">June</option>
+                  <option value="07">July</option>
+                  <option value="08">August</option>
+                  <option value="09">September</option>
                   <option value="10">October</option>
                   <option value="11">November</option>
                   <option value="12">December</option>
@@ -209,11 +221,14 @@ const FormContentPage = () => {
               <textarea className="input" id="notes" name="notes" onChange={changeValue} value={formValue.notes} placeholder="" style={{ height: "120%" }}></textarea>
             </div>
 
-            <div className="buttonParent"> 
-            <a href=" " className="resetButton button cancelButton">Cancel</a>
-            
+            <div className="buttonParent">
+            <Link className="resetButton button cancelButton" to="/home" >Home </Link>           
               <div className="submit-reset">
-                <button type="submit" className="button submitButton" id="submitButton" >{formValue.isUpdate ? "Update" : "Submit" }</button>
+                <button type="submit" className="button submitButton"
+                 id="submitButton" >{formValue.isUpdate ? 
+                 "Update" : "Submit" }
+                </button>
+
                 <button type="reset" className="resetButton button" onClick={reset}>Reset</button>
               </div>
             </div>
