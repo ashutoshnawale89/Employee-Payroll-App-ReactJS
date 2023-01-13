@@ -4,11 +4,12 @@ import Pic2 from './assets/profile-images/pic2.png'
 import Pic3 from './assets/profile-images/pic3.png'
 import Pic4 from './assets/profile-images/pic4.png'
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom"
+import { useParams,Link } from "react-router-dom"
 import EmployeeService from "../services/EmployeeService";
 
 
-const FormContentPage = () => {
+
+const FormContentPage = (props) => {
   let initialValue = {
     name: "",
     profileArray: [
@@ -28,9 +29,48 @@ const FormContentPage = () => {
     notes: "",
     id: "",
     profilePic: "",
+    isUpdate: false,
   };
 
   const [formValue, setForm] = useState(initialValue);
+  const params = useParams();
+
+  useEffect(() => {
+    if (params.id) {
+      getDataById(params.id);
+    }
+  }, [params.id]);
+
+  const getDataById = (id) => {
+    EmployeeService.getEmployeeById(id)
+      .then((response) => {
+        let object = response.data.data;
+        setData(object);
+      })
+      .catch((err) => {
+        alert("err is ", err);
+      });
+  };
+
+  const setData = (obj) => {
+    let array = obj.startDate;
+    console.log(array);
+    console.log(obj);
+
+    setForm({
+      ...formValue,
+      ...obj,
+      id: obj.employeeId,
+      name: obj.name,
+      departmentValue: obj.departments,
+      isUpdate: true,
+      day: array[0] + array[1],
+      month: array[3] + array[4] + array[5],
+      year: array[7] + array[8] + array[9] + array[10],
+      notes: obj.note,
+    });
+  };
+
 
   const changeValue = (event) => {
     console.log(event.target);
@@ -71,16 +111,35 @@ const FormContentPage = () => {
 
     console.log(object);
 
-    EmployeeService.addEmployee(object)
-      .then((respone) => {
-        alert("Employee Data Added Successfully");
-        console.log(respone.data.data);
-      })
-      .catch((error) => {
-        alert("Something went wrong", error);
-      });
-    // clear Data In The Form after submit andd save.....
-    reset();
+    if (formValue.isUpdate) {
+      var answer = window.confirm(
+        "Data once modified cannot be restored!! Do you wish to continue?"
+      );
+      if (answer === true) {
+        EmployeeService.updateEmployee(params.id, object)
+          .then((data) => {
+            console.log(data.data.data);
+            alert("Data updated successfully!");
+          })
+          .catch((error) => {
+            console.log("WARNING!! Error updating the data!", error);
+          });
+      } else {
+        window.location.reload();
+      }
+    } else {
+      EmployeeService.addEmployee(object)
+        .then((response) => {
+          console.log(response);
+          const empData = response.data.data;
+          console.log(empData);
+          alert("Data Added successfully!!");
+        })
+        .catch((error) => {
+          console.log("WARNING!! Error while adding the data!", error);
+        });
+        reset();
+    }
   };
 
   const reset = () => {
@@ -192,18 +251,18 @@ const FormContentPage = () => {
                 </select>
                 <select id="month" name="month" value={formValue.month} onChange={changeValue}>
                   <option value="" disabled selected>Month</option>
-                  <option value="01">January</option>
-                  <option value="02">February</option>
-                  <option value="03">March</option>
-                  <option value="04">April</option>
-                  <option value="05">May</option>
-                  <option value="06">June</option>
-                  <option value="07">July</option>
-                  <option value="08">August</option>
-                  <option value="09">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
+                  <option value="Jan">January</option>
+                  <option value="Feb">February</option>
+                  <option value="Mar">March</option>
+                  <option value="Apr">April</option>
+                  <option value="May">May</option>
+                  <option value="Jun">June</option>
+                  <option value="Jul">July</option>
+                  <option value="Aug">August</option>
+                  <option value="Sep">September</option>
+                  <option value="Oct">October</option>
+                  <option value="Nov">November</option>
+                  <option value="Dec">December</option>
                 </select>
                 <select id="year" name="year" value={formValue.year} onChange={changeValue}>
                 <option value="" disabled selected>Year</option>

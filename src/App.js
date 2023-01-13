@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from './components/Form';
-import HomePage from './components/FormComponents/HomePage'
-import { Route, Routes, Link } from "react-router-dom"
+import HomePage from './components/homeComponents/HomePage'
+import { Route, Routes} from "react-router-dom"
 
 
 class App extends React.Component {
@@ -12,11 +12,9 @@ class App extends React.Component {
         <Routes>
             <Route path='/home' element={<HomePage/>}/>
             <Route path='/form' element={<Form/>}/>
+            <Route path="/Employeeform/:id" element={<Form />}></Route>
         </Routes>
-        <h2>
-          <Link to="/home" >Home </Link>  |
-          <Link to="/form">Form </Link>
-        </h2>
+        <HomePage/>
       </div>);
 }
 }
